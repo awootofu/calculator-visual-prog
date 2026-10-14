@@ -1,0 +1,157 @@
+﻿<Window x:Class="CalculatorWpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Scientific Calculator" Height="640" Width="400"
+        MinHeight="560" MinWidth="330"
+        Background="#1F2937" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="CalcButton" TargetType="Button">
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="4"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Opacity" Value="0.85"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Riwayat ekspresi -->
+        <TextBlock x:Name="HistoryText" Grid.Row="0"
+                   Text="" FontSize="13" Foreground="#9CA3AF"
+                   TextAlignment="Right" Margin="4,0,4,0" MinHeight="20"/>
+
+        <!-- Display utama, rata kanan, font besar -->
+        <TextBox x:Name="DisplayText" Grid.Row="1"
+                 Text="0" FontSize="34" FontWeight="SemiBold" FontFamily="Segoe UI"
+                 Foreground="White" Background="#1F2937" BorderThickness="0"
+                 TextAlignment="Right" IsReadOnly="True" Focusable="False"
+                 Margin="4,0,4,8" Padding="0"/>
+
+        <!-- Grid tombol 5 kolom x 7 baris, proporsional (*) -->
+        <Grid Grid.Row="2" x:Name="ButtonGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Baris 1 -->
+            <Button Grid.Row="0" Grid.Column="0" Content="2nd" Tag="second" x:Name="BtnSecond"
+                    Style="{StaticResource CalcButton}" Background="#374151" Click="OnButtonClick"/>
+            <Button Grid.Row="0" Grid.Column="1" Content="π" Tag="pi"
+                    Style="{StaticResource CalcButton}" Background="#374151" Click="OnButtonClick"/>
+            <Button Grid.Row="0" Grid.Column="2" Content="e" Tag="e"
+                    Style="{StaticResource CalcButton}" Background="#374151" Click="OnButtonClick"/>
+            <Button Grid.Row="0" Grid.Column="3" Content="C" Tag="clear"
+                    Style="{StaticResource CalcButton}" Background="#374151" Click="OnButtonClick"/>
+            <Button Grid.Row="0" Grid.Column="4" Content="⌫" Tag="back"
+                    Style="{StaticResource CalcButton}" Background="#374151" Click="OnButtonClick"/>
+
+            <!-- Baris 2 -->
+            <Button Grid.Row="1" Grid.Column="0" Content="x²" Tag="square" x:Name="BtnSquare"
+                    Style="{StaticResource CalcButton}" Background="#374151" Click="OnButtonClick"/>
+            <Button Grid.Row="1" Grid.Column="1" Content="ʸ√x" Tag="yroot"
+                    Style="{StaticResource CalcButton}" Background="#374151" Click="OnButtonClick"/>
+            <Button Grid.Row="1" Grid.Column="2" Content="|x|" Tag="abs"
+                    Style="{StaticResource CalcButton}" Background="#374151" Click="OnButtonClick"/>
+            <Button Grid.Row="1" Grid.Column="3" Content="exp" Tag="exp"
+                    Style="{StaticResource CalcButton}" Background="#374151" Click="OnButtonClick"/>
+            <Button Grid.Row="1" Grid.Column="4" Content="mod" Tag="mod"
+                    Style="{StaticResource CalcButton}" Background="#374151" Click="OnButtonClick"/>
+
+            <!-- Baris 3 -->
+            <Button Grid.Row="2" Grid.Column="0" Content="³√x" Tag="cbrt" x:Name="BtnCbrt"
+                    Style="{StaticResource CalcButton}" Background="#374151" Click="OnButtonClick"/>
+            <Button Grid.Row="2" Grid.Column="1" Content="(" Tag="lp"
+                    Style="{StaticResource CalcButton}" Background="#374151" Click="OnButtonClick"/>
+            <Button Grid.Row="2" Grid.Column="2" Content=")" Tag="rp"
+                    Style="{StaticResource CalcButton}" Background="#374151" Click="OnButtonClick"/>
+            <Button Grid.Row="2" Grid.Column="3" Content="n!" Tag="fact"
+                    Style="{StaticResource CalcButton}" Background="#374151" Click="OnButtonClick"/>
+            <Button Grid.Row="2" Grid.Column="4" Content="÷" Tag="div"
+                    Style="{StaticResource CalcButton}" Background="#374151" Click="OnButtonClick"/>
+
+            <!-- Baris 4 -->
+            <Button Grid.Row="3" Grid.Column="0" Content="xʸ" Tag="pow"
+                    Style="{StaticResource CalcButton}" Background="#374151" Click="OnButtonClick"/>
+            <Button Grid.Row="3" Grid.Column="1" Content="7" Tag="7"
+                    Style="{StaticResource CalcButton}" Background="#4B5563" Click="OnButtonClick"/>
+            <Button Grid.Row="3" Grid.Column="2" Content="8" Tag="8"
+                    Style="{StaticResource CalcButton}" Background="#4B5563" Click="OnButtonClick"/>
+            <Button Grid.Row="3" Grid.Column="3" Content="9" Tag="9"
+                    Style="{StaticResource CalcButton}" Background="#4B5563" Click="OnButtonClick"/>
+            <Button Grid.Row="3" Grid.Column="4" Content="×" Tag="mul"
+                    Style="{StaticResource CalcButton}" Background="#374151" Click="OnButtonClick"/>
+
+            <!-- Baris 5 -->
+            <Button Grid.Row="4" Grid.Column="0" Content="10ˣ" Tag="pow10" x:Name="BtnPow10"
+                    Style="{StaticResource CalcButton}" Background="#374151" Click="OnButtonClick"/>
+            <Button Grid.Row="4" Grid.Column="1" Content="4" Tag="4"
+                    Style="{StaticResource CalcButton}" Background="#4B5563" Click="OnButtonClick"/>
+            <Button Grid.Row="4" Grid.Column="2" Content="5" Tag="5"
+                    Style="{StaticResource CalcButton}" Background="#4B5563" Click="OnButtonClick"/>
+            <Button Grid.Row="4" Grid.Column="3" Content="6" Tag="6"
+                    Style="{StaticResource CalcButton}" Background="#4B5563" Click="OnButtonClick"/>
+            <Button Grid.Row="4" Grid.Column="4" Content="−" Tag="sub"
+                    Style="{StaticResource CalcButton}" Background="#374151" Click="OnButtonClick"/>
+
+            <!-- Baris 6 -->
+            <Button Grid.Row="5" Grid.Column="0" Content="log" Tag="log" x:Name="BtnLog"
+                    Style="{StaticResource CalcButton}" Background="#374151" Click="OnButtonClick"/>
+            <Button Grid.Row="5" Grid.Column="1" Content="1" Tag="1"
+                    Style="{StaticResource CalcButton}" Background="#4B5563" Click="OnButtonClick"/>
+            <Button Grid.Row="5" Grid.Column="2" Content="2" Tag="2"
+                    Style="{StaticResource CalcButton}" Background="#4B5563" Click="OnButtonClick"/>
+            <Button Grid.Row="5" Grid.Column="3" Content="3" Tag="3"
+                    Style="{StaticResource CalcButton}" Background="#4B5563" Click="OnButtonClick"/>
+            <Button Grid.Row="5" Grid.Column="4" Content="+" Tag="add"
+                    Style="{StaticResource CalcButton}" Background="#374151" Click="OnButtonClick"/>
+
+            <!-- Baris 7 -->
+            <Button Grid.Row="6" Grid.Column="0" Content="ln" Tag="ln" x:Name="BtnLn"
+                    Style="{StaticResource CalcButton}" Background="#374151" Click="OnButtonClick"/>
+            <Button Grid.Row="6" Grid.Column="1" Content="+/−" Tag="neg"
+                    Style="{StaticResource CalcButton}" Background="#4B5563" Click="OnButtonClick"/>
+            <Button Grid.Row="6" Grid.Column="2" Content="0" Tag="0"
+                    Style="{StaticResource CalcButton}" Background="#4B5563" Click="OnButtonClick"/>
+            <Button Grid.Row="6" Grid.Column="3" Content="." Tag="dot"
+                    Style="{StaticResource CalcButton}" Background="#4B5563" Click="OnButtonClick"/>
+            <Button Grid.Row="6" Grid.Column="4" Content="=" Tag="eq"
+                    Style="{StaticResource CalcButton}" Background="#2563EB" Click="OnButtonClick"/>
+        </Grid>
+    </Grid>
+</Window>

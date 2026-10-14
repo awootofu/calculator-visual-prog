@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="CalculatorEngine/CalculatorEngine.csproj" />
+  <Project Path="CalculatorWinForms/CalculatorWinForms.csproj" />
+  <Project Path="CalculatorWpf/CalculatorWpf.csproj" />
+</Solution>
